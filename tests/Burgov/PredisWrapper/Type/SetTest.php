@@ -240,4 +240,20 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $this->client->expects($this->never())->method('__call');
         $res = Set::createFromUnion('key3', new Set($this->client, 'key1'));
     }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testMultiInvalid()
+    {
+        $this->type->union(new \DateTime());
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testMultiStoreInvalid()
+    {
+        $res = Set::createFromUnion('key3', new \DateTime());
+    }
 }

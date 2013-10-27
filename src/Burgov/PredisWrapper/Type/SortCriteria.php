@@ -65,7 +65,7 @@ class SortCriteria
             throw $exception;
         }
 
-        if (!count($limit) == 2) {
+        if (count($limit) != 2) {
             throw $exception;
         }
 

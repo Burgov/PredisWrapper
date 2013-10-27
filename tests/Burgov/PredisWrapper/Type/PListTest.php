@@ -122,6 +122,14 @@ class PListTest extends \PHPUnit_Framework_TestCase
         $this->type->insert('value', PList::AFTER, 'dest');
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInsertInvalidArgument()
+    {
+        $this->type->insert('value', 'something', 'dest');
+    }
+
     public function testCount()
     {
         $this->client->expects($this->once())->method('__call')->with('llen', array('test_key'));
@@ -148,6 +156,14 @@ class PListTest extends \PHPUnit_Framework_TestCase
         $this->type->remove('value');
         $this->type->remove('value', 3, PList::TAIL_TO_HEAD);
         $this->type->remove('value', 3);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRemoveInvalidArgument()
+    {
+        $this->type->remove('value', 3, 'something');
     }
 
     public function testTrim()
@@ -188,16 +204,48 @@ class PListTest extends \PHPUnit_Framework_TestCase
     public function testBlockPopMulti()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->exactly(1))->method('__call')->with('brpop', array('test_key', $destList, 5));
+        $this->client->expects($this->exactly(1))->method('__call')->with('brpop', array('test_key', $destList, 5))->will($this->returnValue(array('key', 'value')));
 
         PList::blockPopMulti(array($this->type, $destList), 5);
     }
 
-    public function testBlockShiftRange()
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testBlockPopNone()
+    {
+        PList::blockPopMulti(array(), 5);
+    }
+
+    public function testBlockShiftMulti()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->exactly(1))->method('__call')->with('blpop', array('test_key', $destList, 5));
+        $this->client->expects($this->exactly(1))->method('__call')->with('blpop', array('test_key', $destList, 5))->will($this->returnValue(array('key', 'value')));
 
         PList::blockShiftMulti(array($this->type, $destList), 5);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testBlockShiftNone()
+    {
+        PList::blockShiftMulti(array(), 5);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testValidateBlockInvalidArgument()
+    {
+        $this->type->pop('random');
+    }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testValidateBlockBadMethodCall()
+    {
+        $this->type->pop(PList::NON_BLOCK, 3);
     }
 }

@@ -7,6 +7,12 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/Burgov/</directory>
+        </whitelist>
+    </filter>
+
     <php>
         <!-- Redis -->
         <const name="REDIS_SERVER_HOST" value="127.0.0.1" />

@@ -116,10 +116,10 @@ class PListTest extends \PHPUnit_Framework_TestCase
 
     public function testInsert()
     {
-        $this->client->expects($this->at(0))->method('__call')->with('linsert', array('test_key', 'value', 'before', 'dest'));
-        $this->client->expects($this->at(1))->method('__call')->with('linsert', array('test_key', 'value', 'after', 'dest'));
-        $this->type->insert(PList::BEFORE, 'dest', 'value');
-        $this->type->insert(PList::AFTER, 'dest', 'value');
+        $this->client->expects($this->at(0))->method('__call')->with('linsert', array('test_key', 'before', 'dest', 'value'));
+        $this->client->expects($this->at(1))->method('__call')->with('linsert', array('test_key', 'after', 'dest', 'value'));
+        $this->type->insert('value', PList::BEFORE, 'dest');
+        $this->type->insert('value', PList::AFTER, 'dest');
     }
 
     public function testCount()

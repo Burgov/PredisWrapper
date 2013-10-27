@@ -11,7 +11,8 @@
         "predis/predis": "*"
     },
     "require-dev": {
-        "symfony/process": "*"
+        "symfony/process": "*",
+        "satooshi/php-coveralls": "dev-master"
     },
     "config": {
         "bin-dir": "bin"

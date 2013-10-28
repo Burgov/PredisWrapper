@@ -74,6 +74,9 @@ class PListTest extends AbstractIntegrationTest
         return $process;
     }
 
+    /**
+     * @medium
+     */
     public function testBlockMethods()
     {
         $process = $this->startProcess('rpush list1 value1', 1);

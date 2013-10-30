@@ -10,7 +10,7 @@ class PListTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMockBuilder('Predis\Client')->disableOriginalConstructor()->getMock();
+        $this->client = $this->getMockBuilder('Burgov\PredisWrapper\Client')->disableOriginalConstructor()->getMock();
 
         $this->type = $this->getMockBuilder('Burgov\PredisWrapper\Type\PList')
             ->setConstructorArgs(array($this->client, 'test_key'))

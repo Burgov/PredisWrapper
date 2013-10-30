@@ -3,7 +3,7 @@
 namespace Burgov\PredisWrapper\Type;
 
 
-use Predis\Client;
+use Burgov\PredisWrapper\Client;
 
 class AbstractType
 {

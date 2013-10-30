@@ -15,7 +15,7 @@ class AbstractTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testCallMethod()
     {
-        $client = $this->getMockBuilder('Predis\Client')->disableOriginalConstructor()->getMock();
+        $client = $this->getMockBuilder('Burgov\PredisWrapper\Client')->disableOriginalConstructor()->getMock();
 
         $type = $this->getMockBuilder('Burgov\PredisWrapper\Type\AbstractType')
             ->setConstructorArgs(array($client, 'test_key'))

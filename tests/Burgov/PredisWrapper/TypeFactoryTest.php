@@ -27,6 +27,14 @@ class TypeFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->instantiateSet('test_key');
     }
 
+    public function testInstantiateSetNonExistent()
+    {
+        $this->client->expects($this->once())->method('getType')->with('test_key')->will($this->returnValue('none'));
+
+        $factory = new TypeFactory($this->client);
+        $factory->instantiateSet('test_key');
+    }
+
     /**
      * @expectedException Burgov\PredisWrapper\Exception\KeyDoesNotExistException
      */
@@ -38,7 +46,7 @@ class TypeFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->instantiate('test_key');
     }
     /**
-     * @expectedException Burgov\PredisWrapper\Exception\WrongTypeException
+     * @expectedException Burgov\PredisWrapper\Exception\UnknownTypeException
      */
     public function testInstantiateSetUnknownWithoutHint()
     {

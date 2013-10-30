@@ -66,7 +66,7 @@ class PListTest extends AbstractIntegrationTest
         } else {
             $timeoutCommand = "sleep 1";
         }
-        $redisCommand = sprintf("%s -h %s -p %s -n %d -x", REDIS_CLI_EXECUTABLE, REDIS_SERVER_HOST, REDIS_SERVER_PORT, REDIS_SERVER_DBNUM);
+        $redisCommand = sprintf("%s -h %s -p %s -n %d -x", $_SERVER['REDIS_CLI_EXECUTABLE'], $_SERVER['REDIS_SERVER_HOST'], $_SERVER['REDIS_SERVER_PORT'], $_SERVER['REDIS_SERVER_DBNUM']);
 
         $process = new Process(implode(" && ", array($timeoutCommand, $redisCommand)));
         $process->setStdin($command);

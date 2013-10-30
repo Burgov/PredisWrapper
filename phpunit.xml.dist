@@ -15,10 +15,10 @@
 
     <php>
         <!-- Redis -->
-        <const name="REDIS_SERVER_HOST" value="127.0.0.1" />
-        <const name="REDIS_SERVER_PORT" value="6379" />
-        <const name="REDIS_SERVER_DBNUM" value="15" />
-        <const name="REDIS_CLI_EXECUTABLE" value="/usr/bin/redis-cli" />
+        <server name="REDIS_SERVER_HOST" value="127.0.0.1" />
+        <server name="REDIS_SERVER_PORT" value="6379" />
+        <!--<server name="REDIS_SERVER_DBNUM" value="15" />-->
+        <server name="REDIS_CLI_EXECUTABLE" value="/usr/bin/redis-cli" />
     </php>
 
     <logging>

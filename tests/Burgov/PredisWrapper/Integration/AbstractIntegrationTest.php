@@ -21,10 +21,13 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (!isset($_SERVER['REDIS_SERVER_DBNUM'])) {
+            $this->markTestSkipped('Select a DBNUM to execute the integration tests on.');
+        }
 
         $parameters = array(
-            'host' => REDIS_SERVER_HOST,
-            'port' => REDIS_SERVER_PORT,
+            'host' => $_SERVER['REDIS_SERVER_HOST'],
+            'port' => $_SERVER['REDIS_SERVER_PORT'],
         );
 
         $options = array();
@@ -33,7 +36,7 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
 
         $this->client = new Client($baseClient);
         $baseClient->connect();
-        $baseClient->select(REDIS_SERVER_DBNUM);
+        $baseClient->select($_SERVER['REDIS_SERVER_DBNUM']);
 
         $info = $this->client->info('server');
         $this->version = $info['Server']['redis_version'];

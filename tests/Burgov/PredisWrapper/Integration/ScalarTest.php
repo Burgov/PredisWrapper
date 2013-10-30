@@ -4,6 +4,7 @@ namespace Burgov\PredisWrapper\Integration;
 
 
 use Burgov\PredisWrapper\Type\Scalar;
+use Burgov\PredisWrapper\TypeFactory;
 
 class ScalarTest extends AbstractIntegrationTest
 {
@@ -17,7 +18,8 @@ class ScalarTest extends AbstractIntegrationTest
      */
     public function testIntegration()
     {
-        $string1 = new Scalar($this->client, 'string1');
+        $factory = new TypeFactory($this->client);
+        $string1 = $factory->instantiate('string1', 'string');
 
         $string1->set("hello");
         $this->assertEquals("hello", (string) $string1);

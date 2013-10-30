@@ -4,6 +4,7 @@ namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Type\PList;
 use Burgov\PredisWrapper\Type\Set;
+use Burgov\PredisWrapper\TypeFactory;
 use Symfony\Component\Process\Process;
 
 class PListTest extends AbstractIntegrationTest
@@ -15,7 +16,8 @@ class PListTest extends AbstractIntegrationTest
 
     public function testIntegration()
     {
-        $list = new PList($this->client, 'list');
+        $factory = new TypeFactory($this->client);
+        $list = $factory->instantiate('list', 'list');
 
         $list[] = 'a';
         $list[] = 'b';

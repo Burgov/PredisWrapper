@@ -4,6 +4,7 @@ namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Exception\HashKeyAlreadySetException;
 use Burgov\PredisWrapper\Type\Hash;
+use Burgov\PredisWrapper\TypeFactory;
 use Predis\ServerException;
 
 class HashTest extends AbstractIntegrationTest
@@ -14,7 +15,8 @@ class HashTest extends AbstractIntegrationTest
 
     public function testIntegration()
     {
-        $hash = new Hash($this->client, 'hash');
+        $factory = new TypeFactory($this->client);
+        $hash = $factory->instantiate('hash', 'hash');
 
         $hash['key1'] = 'value1';
 

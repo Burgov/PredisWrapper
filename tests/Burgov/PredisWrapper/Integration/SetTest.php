@@ -3,17 +3,19 @@
 namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Type\Set;
+use Burgov\PredisWrapper\TypeFactory;
 
 class SetTest extends AbstractIntegrationTest
 {
     protected function setUpDatabase()
     {
+        $factory = new TypeFactory($this->client);
         foreach (array(
                      '1' => array('a', 'b', 'c'),
                      '2' => array('d', 'e', 'f'),
                      '3' => array()
                  ) as $key => $values) {
-            $this->{'set' . $key} = new Set($this->client, 'key' . $key);
+            $this->{'set' . $key} = $factory->instantiate('key'.$key, 'set');
             foreach ($values as $value) {
                 $this->{'set' . $key}->add($value);
             }

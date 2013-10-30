@@ -3,6 +3,7 @@
 namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Client;
+use Predis\Client as BaseClient;
 
 abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,9 +29,11 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
 
         $options = array();
 
-        $this->client = new Client($parameters, $options);
-        $this->client->connect();
-        $this->client->select(REDIS_SERVER_DBNUM);
+        $baseClient = new BaseClient($parameters, $options);
+
+        $this->client = new Client($baseClient);
+        $baseClient->connect();
+        $baseClient->select(REDIS_SERVER_DBNUM);
 
         $info = $this->client->info('server');
         $this->version = $info['Server']['redis_version'];

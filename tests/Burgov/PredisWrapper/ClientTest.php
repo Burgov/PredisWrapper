@@ -4,31 +4,35 @@ namespace Burgov\PredisWrapper;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
+    private $baseClient;
+
     private $client;
 
     public function setUp()
     {
+        $this->baseClient = $this->getMockBuilder('Predis\Client')->disableOriginalConstructor()->setMethods(array('__call'))->getMock();
+
         $this->client = $this->getMockBuilder('Burgov\PredisWrapper\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('__call'))
+            ->setConstructorArgs(array($this->baseClient))
+            ->setMethods(null)
             ->getMock();
     }
 
     public function testExists()
     {
-        $this->client->expects($this->once())->method('__call')->with('exists', array('key1'));
+        $this->baseClient->expects($this->once())->method('__call')->with('exists', array('key1'));
         $this->client->exists('key1');
     }
 
     public function testDelete()
     {
-        $this->client->expects($this->once())->method('__call')->with('del', array('key1'));
+        $this->baseClient->expects($this->once())->method('__call')->with('del', array('key1'));
         $this->client->delete('key1');
     }
 
     public function testFind()
     {
-        $this->client->expects($this->once())->method('__call')->with('keys', array('some?search'));
+        $this->baseClient->expects($this->once())->method('__call')->with('keys', array('some?search'));
         $this->client->find('some?search');
     }
 }

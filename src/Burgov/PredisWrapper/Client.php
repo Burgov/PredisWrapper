@@ -13,6 +13,18 @@ use Predis\Client as BaseClient;
 
 class Client extends BaseClient
 {
+    private $version;
+
+    public function getVersion()
+    {
+        if (null === $this->version) {
+            $info = $this->info('server');
+            $this->version = $info['Server']['redis_version'];
+        }
+
+        return $this->version;
+    }
+
     public function exists($key)
     {
         return (Boolean) parent::exists(AbstractType::key($key));

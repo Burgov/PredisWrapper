@@ -7,6 +7,8 @@ use Burgov\PredisWrapper\Client;
 abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $version;
+
     public static function assertArrayEquals($expected, $actual, $message = '')
     {
         try {
@@ -29,6 +31,9 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->client = new Client($parameters, $options);
         $this->client->connect();
         $this->client->select(REDIS_SERVER_DBNUM);
+
+        $info = $this->client->info('server');
+        $this->version = $info['Server']['redis_version'];
 
         $this->client->flushDatabase();
         $this->setUpDatabase();

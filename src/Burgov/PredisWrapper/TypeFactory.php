@@ -31,7 +31,7 @@ class TypeFactory
             case 'list':
                 return new Type\PList($this->client, $key);
             case 'string':
-                return new Type\String($this->client, $key);
+                return new Type\Scalar($this->client, $key);
             default:
                 throw new Exception\UnknownTypeException($key, $type);
         }

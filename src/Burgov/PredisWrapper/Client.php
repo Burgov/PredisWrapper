@@ -8,17 +8,18 @@
 
 namespace Burgov\PredisWrapper;
 
+use Burgov\PredisWrapper\Type\AbstractType;
 use Predis\Client as BaseClient;
 
 class Client extends BaseClient
 {
     public function exists($key)
     {
-        return (Boolean) parent::exists($key);
+        return (Boolean) parent::exists(AbstractType::key($key));
     }
     public function delete($key)
     {
-        return (Boolean) parent::del($key);
+        return (Boolean) parent::del(AbstractType::key($key));
     }
 
     public function getType($key)

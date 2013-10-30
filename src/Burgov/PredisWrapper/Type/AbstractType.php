@@ -16,9 +16,11 @@ class AbstractType
         $this->key = $key;
     }
 
-    public function __toString()
-    {
-        return $this->key;
+    public static function key($key) {
+        if ($key instanceof self) {
+            return $key->getKey();
+        }
+        return (string) $key;
     }
 
     protected function getClient()

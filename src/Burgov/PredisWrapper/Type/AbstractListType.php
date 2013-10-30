@@ -57,7 +57,7 @@ class AbstractListType extends AbstractType
             $sort = new SortCriteria();
         }
         $parts = $sort->getParts();
-        $parts['STORE'] = (string) $dest;
+        $parts['STORE'] = self::key($dest);
         $arguments = array('sort', $parts);
 
         return self::formatSortResult(call_user_func_array(array($src, 'execute'), $arguments), $sort);

@@ -175,7 +175,8 @@ class PListTest extends \PHPUnit_Framework_TestCase
     public function testPopAndPushInto()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->once())->method('__call')->with('rpoplpush', array('test_key', $destList));
+        $destList->expects($this->any())->method('getKey')->will($this->returnValue('dest_key'));
+        $this->client->expects($this->once())->method('__call')->with('rpoplpush', array('test_key', 'dest_key'));
         $this->type->popAndPushInto($destList);
     }
 
@@ -196,7 +197,8 @@ class PListTest extends \PHPUnit_Framework_TestCase
     public function testBlockPopAndPushInto()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->exactly(2))->method('__call')->with('brpoplpush', array('test_key', $destList, 5));
+        $destList->expects($this->any())->method('getKey')->will($this->returnValue('dest_key'));
+        $this->client->expects($this->exactly(2))->method('__call')->with('brpoplpush', array('test_key', 'dest_key', 5));
         $this->type->popAndPushInto($destList, PList::BLOCK, 5);
         $this->type->blockPopAndPushInto($destList, 5);
     }
@@ -204,7 +206,8 @@ class PListTest extends \PHPUnit_Framework_TestCase
     public function testBlockPopMulti()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->exactly(1))->method('__call')->with('brpop', array('test_key', $destList, 5))->will($this->returnValue(array('key', 'value')));
+        $destList->expects($this->any())->method('getKey')->will($this->returnValue('dest_key'));
+        $this->client->expects($this->exactly(1))->method('__call')->with('brpop', array('test_key', 'dest_key', 5))->will($this->returnValue(array('key', 'value')));
 
         PList::blockPopMulti(array($this->type, $destList), 5);
     }
@@ -220,7 +223,8 @@ class PListTest extends \PHPUnit_Framework_TestCase
     public function testBlockShiftMulti()
     {
         $destList = $this->getMock('Burgov\PredisWrapper\Type\PList', array(), array(), '', false);
-        $this->client->expects($this->exactly(1))->method('__call')->with('blpop', array('test_key', $destList, 5))->will($this->returnValue(array('key', 'value')));
+        $destList->expects($this->any())->method('getKey')->will($this->returnValue('dest_key'));
+        $this->client->expects($this->exactly(1))->method('__call')->with('blpop', array('test_key', 'dest_key', 5))->will($this->returnValue(array('key', 'value')));
 
         PList::blockShiftMulti(array($this->type, $destList), 5);
     }

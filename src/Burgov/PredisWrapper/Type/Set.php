@@ -26,11 +26,15 @@ class Set extends AbstractListType
             throw new \BadMethodCallException('expected at least one argument');
         }
 
-        foreach ($arguments as $argument) {
+        foreach ($arguments as $key => $argument) {
             if (!$argument instanceof self) {
                 throw new \BadMethodCallException('argument should be instance of ' . __CLASS__);
             }
         }
+
+        $arguments = array_map(function(self $set) {
+            return self::key($set);
+        }, $arguments);
 
         array_unshift($arguments, sprintf('s%s', $function));
         return call_user_func_array(array($this, 'execute'), $arguments);
@@ -63,7 +67,7 @@ class Set extends AbstractListType
 
     public function move(self $dest, $value)
     {
-        return (Boolean)$this->execute('smove', $dest, $value);
+        return (Boolean)$this->execute('smove', self::key($dest), $value);
     }
 
     public function pop()
@@ -101,12 +105,18 @@ class Set extends AbstractListType
             }
         }
 
+        $client = $arguments[0]->getClient();
+
+        $arguments = array_map(function(self $set) {
+            return self::key($set);
+        }, $arguments);
+
         if (count($arguments) < 2) {
             throw new \BadMethodCallException('expected at least three arguments');
         }
 
         if (!$set instanceof self) {
-            $set = new self($arguments[1]->getClient(), (string)$set);
+            $set = new self($client, (string)$set);
         }
 
 

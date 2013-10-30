@@ -99,7 +99,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
     {
         $set2 = new Set($this->client, 'set2');
 
-        $this->client->expects($this->once())->method('__call')->with('smove', array('test_key', $set2, 'value'));
+        $this->client->expects($this->once())->method('__call')->with('smove', array('test_key', 'set2', 'value'));
         $res = $this->type->move($set2, 'value');
 
         $this->assertInternalType('boolean', $res);

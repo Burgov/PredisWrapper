@@ -109,7 +109,10 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
             throw new \InvalidArgumentException();
         }
 
-        $args = array_slice($lists, 1);
+        $args = array_map(function(self $list) {
+            return self::key($list);
+        }, array_slice($lists, 1));
+
         array_unshift($args, 'brpop');
         $args[] = $timeout;
 
@@ -144,7 +147,10 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
             throw new \InvalidArgumentException();
         }
 
-        $args = array_slice($lists, 1);
+        $args = array_map(function(self $list) {
+            return self::key($list);
+        }, array_slice($lists, 1));
+
         array_unshift($args, 'blpop');
         $args[] = $timeout;
 
@@ -189,7 +195,7 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
     {
         $this->validateBlock($block, $timeout);
 
-        $args = array('rpoplpush', $dest);
+        $args = array('rpoplpush', self::key($dest));
         if ($block === self::BLOCK) {
             $args[0] = 'b' . $args[0];
             $args[] = $timeout;

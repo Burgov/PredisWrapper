@@ -2,8 +2,6 @@
 
 namespace Burgov\PredisWrapper;
 
-use Predis\Command\KeyType;
-
 class TypeFactory
 {
     private $instances = array();

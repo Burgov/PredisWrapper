@@ -6,6 +6,8 @@ use Predis\Command\KeyType;
 
 class TypeFactory
 {
+    private $instances = array();
+
     private $client;
 
     public function __construct(Client $client)
@@ -15,6 +17,10 @@ class TypeFactory
 
     public function instantiate($key, $default = null)
     {
+        if (array_key_exists($key, $this->instances)) {
+            return $this->instances[$key];
+        }
+
         $type = $this->client->getType($key);
 
         if (null !== $default && $type == 'none') {
@@ -25,35 +31,57 @@ class TypeFactory
             case 'none':
                 throw new Exception\KeyDoesNotExistException($key);
             case 'set':
-                return new Type\Set($this->client, $key);
+                $object = new Type\Set($this->client, $key);
+                break;
             case 'hash':
-                return new Type\Hash($this->client, $key);
+                $object = new Type\Hash($this->client, $key);
+                break;
             case 'list':
-                return new Type\PList($this->client, $key);
+                $object = new Type\PList($this->client, $key);
+                break;
             case 'string':
-                return new Type\Scalar($this->client, $key);
+                $object = new Type\Scalar($this->client, $key);
+                break;
             default:
                 throw new Exception\UnknownTypeException($key, $type);
         }
+
+        return $this->instances[$key] = $object;
     }
 
     public function instantiateSet($key)
     {
-        return $this->instantiate($key, 'set');
+        $object = $this->instantiate($key, 'set');
+        if (!$object instanceof Type\Set) {
+            throw new Exception\WrongTypeException('set', get_class($object));
+        }
+        return $object;
     }
 
     public function instantiateHash($key)
     {
-        return $this->instantiate($key, 'hash');
+        $object = $this->instantiate($key, 'hash');
+        if (!$object instanceof Type\Hash) {
+            throw new Exception\WrongTypeException('hash', get_class($object));
+        }
+        return $object;
     }
 
     public function instantiateScalar($key)
     {
-        return $this->instantiate($key, 'string');
+        $object = $this->instantiate($key, 'string');
+        if (!$object instanceof Type\Scalar) {
+            throw new Exception\WrongTypeException('string', get_class($object));
+        }
+        return $object;
     }
 
     public function instantiateList($key)
     {
-        return $this->instantiate($key, 'list');
+        $object = $this->instantiate($key, 'list');
+        if (!$object instanceof Type\PList) {
+            throw new Exception\WrongTypeException('list', get_class($object));
+        }
+        return $object;
     }
 }

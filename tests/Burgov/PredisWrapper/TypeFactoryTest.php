@@ -66,4 +66,28 @@ class TypeFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->instantiate('test_key');
     }
 
+    public function testInstantiateReturnsSameObject()
+    {
+        $this->client->expects($this->once())->method('getType')->with('test_key')->will($this->returnValue('set'));
+
+        $factory = new TypeFactory($this->client);
+        $set = $factory->instantiateSet('test_key');
+
+        $this->assertSame($set, $factory->instantiateSet('test_key'));
+    }
+
+    /**
+     * @expectedException Burgov\PredisWrapper\Exception\WrongTypeException
+     */
+    public function testInstantiateKnownFailsWithWrongType()
+    {
+        $this->client->expects($this->once())->method('getType')->with('test_key')->will($this->returnValue('set'));
+
+        $factory = new TypeFactory($this->client);
+        $set = $factory->instantiate('test_key');
+        $this->assertInstanceOf('Burgov\PredisWrapper\Type\Set', $set);
+
+        $set = $factory->instantiateList('test_key');
+    }
+
 }

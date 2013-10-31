@@ -42,6 +42,9 @@ class TypeFactory
             case 'string':
                 $object = new Type\Scalar($this->client, $key);
                 break;
+            case 'sortedset':
+                $object = new Type\SortedSet($this->client, $key);
+                break;
             default:
                 throw new Exception\UnknownTypeException($key, $type);
         }
@@ -81,6 +84,15 @@ class TypeFactory
         $object = $this->instantiate($key, 'list');
         if (!$object instanceof Type\PList) {
             throw new Exception\WrongTypeException('list', get_class($object));
+        }
+        return $object;
+    }
+
+    public function instantiateSortedSet($key)
+    {
+        $object = $this->instantiate($key, 'sortedset');
+        if (!$object instanceof Type\SortedSet) {
+            throw new Exception\WrongTypeException('sortedset', get_class($object));
         }
         return $object;
     }

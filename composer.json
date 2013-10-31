@@ -2,7 +2,7 @@
     "name": "burgov/predis-wrapper",
     "license": "MIT",
     "type": "library",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "A set of helper classes around Predis",
     "autoload": {
         "psr-0": { "": "src/" }
     },

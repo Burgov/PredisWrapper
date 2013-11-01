@@ -11,6 +11,9 @@
         <whitelist>
             <directory suffix=".php">src/Burgov/</directory>
         </whitelist>
+        <blacklist>
+            <directory suffix=".php">src/Burgov/PredisWrapper/Command/</directory>
+        </blacklist>
     </filter>
 
     <php>

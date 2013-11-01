@@ -81,6 +81,8 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
     /**
      * Wraps commands ZRANK and ZREVRANK
      *
+     * Pass SortedSet::REVERSE as $flags argument to use ZREVRANK
+     *
      * @param $value
      * @param null $flags
      * @return mixed
@@ -200,6 +202,12 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
     /**
      * Wraps commands ZRANGE, ZREVRANGE, ZRANGEBYSCORE and ZREVRANGEBYSCORE
      *
+     * To call ZRANGE: $sortedSet->getRange(0, -1);
+     * To call ZREVRANGE: $sortedSet->getRange(0, -1, SortedSet::REVERSE)
+     * To call ZRANGEBYSCORE: $sortedSet->getRange(0, -1, SortedSet::BY_SCORE)
+     * To call ZREVRANGEBYSCORE: $sortedSet->getRange(0, -1, SortedSet::REVERSE | SortedSet::BY_SCORE)
+     * To call ZREVRANGEBYSCORE + WITHSCORES + LIMIT: $sortedSet->getRange(0, -1, SortedSet::REVERSE | SortedSet::BY_SCORE | SortedSet::WITH_SCORES, array(1, 3)
+     *
      * @param int $start
      * @param $end
      * @param int $flags
@@ -250,6 +258,8 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
 
     /**
      * Wraps commands ZREMRANGEBYSCORE and ZREMRANGEBYRANK
+     *
+     * Pass SortedSet::BY_SCORE as $flags to use ZREMRANKBYSCORE
      *
      * @param int $start
      * @param $end

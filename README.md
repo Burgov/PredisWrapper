@@ -32,3 +32,5 @@ See usage examples in the integration tests:
   - [List](tests/Burgov/PredisWrapper/Integration/PListTest.php)
   - [Set](tests/Burgov/PredisWrapper/Integration/SetTest.php)
   - [SortedSet](tests/Burgov/PredisWrapper/Integration/SortedSetTest.php)
+
+Here is a list of all the redis commands that are wrapped (so far): [Wrapped commands](doc/wrapped_commands.md)

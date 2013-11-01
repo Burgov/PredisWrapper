@@ -13,6 +13,13 @@ class TypeFactory
         $this->client = $client;
     }
 
+    /**
+     * @param $key
+     * @param $default if the type does not exist, what should be make of it? null if it should result in an error
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\AbstractType
+     * @throws Exception\UnknownTypeException
+     * @throws Exception\KeyDoesNotExistException
+     */
     public function instantiate($key, $default = null)
     {
         if (array_key_exists($key, $this->instances)) {
@@ -50,6 +57,11 @@ class TypeFactory
         return $this->instances[$key] = $object;
     }
 
+    /**
+     * @param $key
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\SortedSet
+     * @throws Exception\WrongTypeException
+     */
     public function instantiateSet($key)
     {
         $object = $this->instantiate($key, 'set');
@@ -59,6 +71,11 @@ class TypeFactory
         return $object;
     }
 
+    /**
+     * @param $key
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\SortedSet
+     * @throws Exception\WrongTypeException
+     */
     public function instantiateHash($key)
     {
         $object = $this->instantiate($key, 'hash');
@@ -68,6 +85,11 @@ class TypeFactory
         return $object;
     }
 
+    /**
+     * @param $key
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\SortedSet
+     * @throws Exception\WrongTypeException
+     */
     public function instantiateScalar($key)
     {
         $object = $this->instantiate($key, 'string');
@@ -77,6 +99,11 @@ class TypeFactory
         return $object;
     }
 
+    /**
+     * @param $key
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\SortedSet
+     * @throws Exception\WrongTypeException
+     */
     public function instantiateList($key)
     {
         $object = $this->instantiate($key, 'list');
@@ -86,6 +113,11 @@ class TypeFactory
         return $object;
     }
 
+    /**
+     * @param $key
+     * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\SortedSet
+     * @throws Exception\WrongTypeException
+     */
     public function instantiateSortedSet($key)
     {
         $object = $this->instantiate($key, 'sortedset');

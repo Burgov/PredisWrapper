@@ -41,6 +41,14 @@ class AbstractListType extends AbstractType
         return $keyedResults;
     }
 
+    /**
+     * Fetch the elements of a key sorted by SortCriteria
+     * Wraps command SORT
+     *
+     * @see SortCriteria
+     * @param SortCriteria $sort
+     * @return array
+     */
     public function sort(SortCriteria $sort = null)
     {
         if (null === $sort) {
@@ -51,6 +59,16 @@ class AbstractListType extends AbstractType
         return self::formatSortResult(call_user_func_array(array($this, "execute"), $arguments), $sort);
     }
 
+    /**
+     * Store the elements of a key sorted by SortCriteria into destination
+     * Wraps method SORT with argument STORE
+     *
+     * @see SortCriteria
+     * @param Set $dest
+     * @Param Set $src
+     * @param SortCriteria $sort
+     * @return array
+     */
     public static function createFromSort(Set $dest, Set $src, SortCriteria $sort = null)
     {
         if (null === $sort) {

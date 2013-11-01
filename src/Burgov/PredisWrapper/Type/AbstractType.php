@@ -16,6 +16,14 @@ class AbstractType
         $this->key = $key;
     }
 
+    /**
+     * Get the key name of the specified key.
+     * For convenience, this method will simply return the passed argument if it is not an instance of self
+     * Useful for when you don't know if the key is the name of the key or an instance of a Type
+     *
+     * @param $key
+     * @return string
+     */
     public static function key($key) {
         if ($key instanceof self) {
             return $key->getKey();
@@ -28,6 +36,11 @@ class AbstractType
         return $this->client;
     }
 
+    /**
+     * Get the name of the Type
+     *
+     * @return string
+     */
     public function getKey()
     {
         return $this->key;

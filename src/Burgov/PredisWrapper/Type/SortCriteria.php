@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Bart
- * Date: 26-10-13
- * Time: 18:00
- */
 
 namespace Burgov\PredisWrapper\Type;
 

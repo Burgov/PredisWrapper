@@ -12,7 +12,10 @@
     },
     "require-dev": {
         "symfony/process": "*",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "symfony/console": "*",
+        "symfony/dom-crawler": "*",
+        "symfony/css-selector": "*"
     },
     "config": {
         "bin-dir": "bin"

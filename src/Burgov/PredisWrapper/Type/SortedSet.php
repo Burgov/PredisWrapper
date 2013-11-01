@@ -24,6 +24,13 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         }
     }
 
+    /**
+     * Wraps command ZCARD and ZCOUNT
+     *
+     * @param null $start
+     * @param null $end
+     * @return int|mixed
+     */
     public function count($start = null, $end = null)
     {
         if (null === $start && null === $end) {
@@ -35,6 +42,12 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return $this->execute('zcount', $start, $end);
     }
 
+    /**
+     * Wraps command ZADD
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function add()
     {
         $args = array();
@@ -52,6 +65,12 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return call_user_func_array(array($this, 'execute'), $args);
     }
 
+    /**
+     * Wraps command ZREM
+     *
+     * @param $arg1
+     * @return mixed
+     */
     public function remove($arg1)
     {
         $args = func_get_args();
@@ -59,6 +78,13 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return call_user_func_array(array($this, 'execute'), $args);
     }
 
+    /**
+     * Wraps commands ZRANK and ZREVRANK
+     *
+     * @param $value
+     * @param null $flags
+     * @return mixed
+     */
     public function getRank($value, $flags = null)
     {
         $command = 'z';
@@ -69,11 +95,24 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return $this->execute($command, $value);
     }
 
+    /**
+     * Wraps command ZSCORE
+     *
+     * @param $value
+     * @return mixed
+     */
     public function getScore($value)
     {
         return $this->execute('zscore', $value);
     }
 
+    /**
+     * Wraps command ZINCRBY
+     *
+     * @param $value
+     * @param $score
+     * @return mixed
+     */
     public function incrementScore($value, $score)
     {
         return $this->execute('zincrby', $score, $value);
@@ -125,11 +164,29 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return $dest;
     }
 
+    /**
+     * Wraps command ZUNIONSTORE
+     *
+     * @param $dest
+     * @param array $from
+     * @param array $weights
+     * @param string $aggregate
+     * @return SortedSet
+     */
     public static function createFromUnion($dest, array $from, array $weights = null, $aggregate = self::AGGREGATE_SUM)
     {
         return self::createFromFunction('union', func_get_args());
     }
 
+    /**
+     * Wraps command ZINTERSTORE
+     *
+     * @param $dest
+     * @param array $from
+     * @param array $weights
+     * @param string $aggregate
+     * @return SortedSet
+     */
     public static function createFromIntersect($dest, array $from, array $weights = null, $aggregate = self::AGGREGATE_SUM)
     {
         return self::createFromFunction('inter', func_get_args());
@@ -140,6 +197,16 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return new \ArrayIterator($this->getRange());
     }
 
+    /**
+     * Wraps commands ZRANGE, ZREVRANGE, ZRANGEBYSCORE and ZREVRANGEBYSCORE
+     *
+     * @param int $start
+     * @param $end
+     * @param int $flags
+     * @param array $limit
+     * @return array|mixed
+     * @throws \InvalidArgumentException
+     */
     public function getRange($start = 0, $end = -1, $flags = 0, array $limit = null)
     {
         $command = 'z';
@@ -181,6 +248,14 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         return $results;
     }
 
+    /**
+     * Wraps commands ZREMRANGEBYSCORE and ZREMRANGEBYRANK
+     *
+     * @param int $start
+     * @param $end
+     * @param int $flags
+     * @return mixed
+     */
     public function removeRange($start = 0, $end = -1, $flags = 0)
     {
         $command = 'zremrangeby';

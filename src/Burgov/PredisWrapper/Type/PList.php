@@ -15,21 +15,39 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         HEAD_TO_TAIL = 'head_to_tail',
         TAIL_TO_HEAD = 'tail_to_head';
 
+    /**
+     * Wraps command LRANGE
+     *
+     * @param $offset
+     * @param $length
+     * @return array
+     */
     public function range($offset, $length)
     {
         return $this->execute('lrange', $offset, $length);
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         return $this->range(0, -1);
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->all());
     }
 
+    /**
+     * @param int $offset
+     * @return bool
+     * @throws \InvalidArgumentException
+     */
     public function offsetExists($offset)
     {
         if (!is_integer($offset)) {
@@ -38,6 +56,13 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return count($this) > $offset;
     }
 
+    /**
+     * Wraps command LINDEX
+     *
+     * @param int $offset
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function offsetGet($offset)
     {
         if (!is_integer($offset)) {
@@ -46,6 +71,13 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return $this->execute('lindex', $offset);
     }
 
+    /**
+     * Wraps command LSET
+     *
+     * @param int $offset
+     * @param mixed $value
+     * @throws \InvalidArgumentException
+     */
     public function offsetSet($offset, $value)
     {
         if (null === $offset) {
@@ -58,11 +90,20 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         $this->execute('lset', $offset, $value);
     }
 
+    /**
+     * @param mixed $offset
+     * @throws \BadMethodCallException
+     */
     public function offsetUnset($offset)
     {
         throw new \BadMethodCallException('The unset method is not supported for PList');
     }
 
+    /**
+     * Wraps command LLEN
+     *
+     * @return int
+     */
     public function count()
     {
         return $this->execute('llen');
@@ -82,16 +123,36 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         }
     }
 
+    /**
+     * Wraps commands RPUSH and RPUSHX
+     *
+     * @param $value
+     * @param bool $try
+     * @return mixed
+     */
     public function push($value, $try = false)
     {
         return $this->execute('rpush' . ($try ? 'x' : ''), $value);
     }
 
+    /**
+     * Wraps commands LPUSH and LPUSHX
+     *
+     * @param $value
+     * @param bool $try
+     * @return mixed
+     */
     public function unshift($value, $try = false)
     {
         return $this->execute('lpush' . ($try ? 'x' : ''), $value);
     }
 
+    /**
+     * Wraps command RPOP
+     * @param string $block
+     * @param null $timeout
+     * @return mixed
+     */
     public function pop($block = self::NON_BLOCK, $timeout = null)
     {
         $this->validateBlock($block, $timeout);
@@ -103,6 +164,14 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return $this->execute('rpop');
     }
 
+    /**
+     * Wraps command BRPOP
+     *
+     * @param array $lists
+     * @param int $timeout
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public static function blockPopMulti(array $lists, $timeout = 0)
     {
         if (count($lists) < 1) {
@@ -129,7 +198,13 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return self::blockPopMulti(array($this), $timeout);
     }
 
-
+    /**
+     * Wraps command LPOP
+     *
+     * @param string $block
+     * @param null $timeout
+     * @return mixed
+     */
     public function shift($block = self::NON_BLOCK, $timeout = null)
     {
         $this->validateBlock($block, $timeout);
@@ -141,6 +216,14 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return $this->execute('lpop');
     }
 
+    /**
+     * Wraps command BLPOP
+     *
+     * @param array $lists
+     * @param int $timeout
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public static function blockShiftMulti(array $lists, $timeout = 0)
     {
         if (count($lists) < 1) {
@@ -167,6 +250,14 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return self::blockShiftMulti(array($this), $timeout);
     }
 
+    /**
+     * Wraps command LINSERT
+     *
+     * @param $value
+     * @param $position
+     * @param $dest
+     * @throws \InvalidArgumentException
+     */
     public function insert($value, $position, $dest)
     {
         if ($position !== self::BEFORE && $position !== self::AFTER) {
@@ -175,6 +266,14 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         $this->execute('linsert', $position, $dest, $value);
     }
 
+    /**
+     * Wraps command LREM
+     *
+     * @param $value
+     * @param int $count
+     * @param string $direction
+     * @throws \InvalidArgumentException
+     */
     public function remove($value, $count = 0, $direction = self::HEAD_TO_TAIL)
     {
         if ($direction !== self::HEAD_TO_TAIL && $direction !== self::TAIL_TO_HEAD) {
@@ -186,11 +285,26 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         $this->execute('lrem', $count, $value);
     }
 
+    /**
+     * Wraps command LTRIM
+     *
+     * @param $offset
+     * @param $length
+     * @return mixed
+     */
     public function trim($offset, $length)
     {
         return $this->execute('ltrim', $offset, $length);
     }
 
+    /**
+     * Wraps commands RPOPLPUSH and BRPOPLPUSH
+     *
+     * @param PList $dest
+     * @param string $block
+     * @param null $timeout
+     * @return mixed
+     */
     public function popAndPushInto(self $dest, $block = self::NON_BLOCK, $timeout = null)
     {
         $this->validateBlock($block, $timeout);
@@ -204,6 +318,12 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
         return call_user_func_array(array($this, 'execute'), $args);
     }
 
+    /**
+     * Wraps command BRPOPLPUSH
+     *
+     * @param PList $dest
+     * @param $timeout
+     */
     public function blockPopAndPushInto(self $dest, $timeout)
     {
         $this->popAndPushInto($dest, self::BLOCK, $timeout);

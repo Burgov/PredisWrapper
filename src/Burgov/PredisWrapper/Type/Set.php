@@ -5,16 +5,33 @@ namespace Burgov\PredisWrapper\Type;
 
 class Set extends AbstractListType
 {
+    /**
+     * Wraps command SADD
+     *
+     * @param $element
+     * @return bool
+     */
     public function add($element)
     {
         return (Boolean)$this->execute('sadd', $element);
     }
 
+    /**
+     * Wraps command SREMOVE
+     *
+     * @param $element
+     * @return bool
+     */
     public function remove($element)
     {
         return (Boolean)$this->execute('sremove', $element);
     }
 
+    /**
+     * Wraps command SCARD
+     *
+     * @return mixed
+     */
     public function count()
     {
         return $this->execute('scard');
@@ -40,56 +57,115 @@ class Set extends AbstractListType
         return call_user_func_array(array($this, 'execute'), $arguments);
     }
 
+    /**
+     * Wraps command SDIFF
+     *
+     * @return mixed
+     */
     public function diff()
     {
         return $this->multiSetFunction('diff', func_get_args());
     }
 
+    /**
+     * Wraps command SINTER
+     *
+     * @return mixed
+     */
     public function intersect()
     {
         return $this->multiSetFunction('inter', func_get_args());
     }
 
+    /**
+     * Wraps command SUNION
+     *
+     * @return mixed
+     */
     public function union()
     {
         return $this->multiSetFunction('union', func_get_args());
     }
 
+    /**
+     * Wraps command SISMEMBER
+     *
+     * @param $value
+     * @return bool
+     */
     public function contains($value)
     {
         return (Boolean)$this->execute('sismember', $value);
     }
 
+    /**
+     * Wraps command SMEMBERS
+     *
+     * @return mixed
+     */
     public function all()
     {
         return $this->execute('smembers');
     }
 
+    /**
+     * Wraps command SMOVE
+     *
+     * @param Set $dest
+     * @param $value
+     * @return bool
+     */
     public function move(self $dest, $value)
     {
         return (Boolean)$this->execute('smove', self::key($dest), $value);
     }
 
+    /**
+     * Wraps command SPOP
+     *
+     * @return bool
+     */
     public function pop()
     {
         return (Boolean)$this->execute('spop');
     }
 
+    /**
+     * Wraps command SRANDMEMBER
+     *
+     * @return mixed
+     */
     public function rand()
     {
         return $this->execute('srandmember');
     }
 
+    /**
+     * Wraps command SRANDMEMBER with position amount
+     * @param $amount
+     * @return mixed
+     */
     public function randUniqueList($amount)
     {
         return $this->execute('srandmember', $amount);
     }
 
+    /**
+     * Wraps command SRANDMEMBER with negative amount
+     * @param $amount
+     * @return mixed
+     */
     public function randList($amount)
     {
         return $this->execute('srandmember', -$amount);
     }
 
+    /**
+     * Wraps command SREM
+     *
+     * @param $value
+     * @return bool
+     */
     public function removeElement($value)
     {
         return (Boolean)$this->execute('srem', $value);
@@ -126,16 +202,31 @@ class Set extends AbstractListType
         return $set;
     }
 
+    /**
+     * Wraps command SDIFFSTORE
+     *
+     * @return Set|mixed
+     */
     public static function createFromDiff()
     {
         return self::createFromFunction('diff', func_get_args());
     }
 
+    /**
+     * Wraps command SINTERSTORE
+     *
+     * @return Set|mixed
+     */
     public static function createFromIntersect()
     {
         return self::createFromFunction('inter', func_get_args());
     }
 
+    /**
+     * Wraps command SUNIONSTORE
+     *
+     * @return Set|mixed
+     */
     public static function createFromUnion()
     {
         return self::createFromFunction('union', func_get_args());

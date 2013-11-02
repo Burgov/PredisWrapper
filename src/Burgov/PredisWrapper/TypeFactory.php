@@ -14,8 +14,8 @@ class TypeFactory
     }
 
     /**
-     * @param $key
-     * @param $default if the type does not exist, what should be make of it? null if it should result in an error
+     * @param string $key
+     * @param string $default if the type does not exist, what should be make of it? null if it should result in error
      * @return Type\Hash|Type\PList|Type\Scalar|Type\Set|Type\AbstractType
      * @throws Exception\UnknownTypeException
      * @throws Exception\KeyDoesNotExistException

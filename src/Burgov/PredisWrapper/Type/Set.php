@@ -43,13 +43,13 @@ class Set extends AbstractListType
             throw new \BadMethodCallException('expected at least one argument');
         }
 
-        foreach ($arguments as $key => $argument) {
+        foreach ($arguments as $argument) {
             if (!$argument instanceof self) {
                 throw new \BadMethodCallException('argument should be instance of ' . __CLASS__);
             }
         }
 
-        $arguments = array_map(function(self $set) {
+        $arguments = array_map(function (self $set) {
             return self::key($set);
         }, $arguments);
 
@@ -175,7 +175,7 @@ class Set extends AbstractListType
     {
         $set = array_shift($arguments);
 
-        foreach ($arguments as $key => $argument) {
+        foreach ($arguments as $argument) {
             if (!$argument instanceof self) {
                 throw new \BadMethodCallException('argument should be instance of ' . __CLASS__);
             }
@@ -183,7 +183,7 @@ class Set extends AbstractListType
 
         $client = $arguments[0]->getClient();
 
-        $arguments = array_map(function(self $set) {
+        $arguments = array_map(function (self $set) {
             return self::key($set);
         }, $arguments);
 

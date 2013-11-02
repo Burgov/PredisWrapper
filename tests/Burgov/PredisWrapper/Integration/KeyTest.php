@@ -6,7 +6,9 @@ use Burgov\PredisWrapper\Type\Set;
 
 class KeyTest extends AbstractIntegrationTest
 {
-    private $set1, $set2, $set3;
+    private $set1;
+    private $set2;
+    private $set3;
 
     protected function setUpDatabase()
     {
@@ -32,4 +34,4 @@ class KeyTest extends AbstractIntegrationTest
 
         $this->assertArrayEquals(array('set2', 'set3'), $this->client->find('set?'));
     }
-} 
+}

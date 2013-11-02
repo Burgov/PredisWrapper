@@ -2,9 +2,6 @@
 
 namespace Burgov\PredisWrapper\Type;
 
-
-use Traversable;
-
 class PList extends AbstractListType implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     const
@@ -178,7 +175,7 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
             throw new \InvalidArgumentException();
         }
 
-        $args = array_map(function(self $list) {
+        $args = array_map(function (self $list) {
             return self::key($list);
         }, array_slice($lists, 1));
 
@@ -230,7 +227,7 @@ class PList extends AbstractListType implements \ArrayAccess, \Countable, \Itera
             throw new \InvalidArgumentException();
         }
 
-        $args = array_map(function(self $list) {
+        $args = array_map(function (self $list) {
             return self::key($list);
         }, array_slice($lists, 1));
 

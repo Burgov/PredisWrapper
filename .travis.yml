@@ -6,6 +6,10 @@ env: REDIS_SERVER_DBNUM=0
 services:
   - redis-server
 before_script:
-    - composer --prefer-source --dev install
+  - pyrus install http://phptal.org/latest.tar.gz && pear install pear/PHP_CodeSniffer && phpenv rehash;
+  - composer --prefer-source --dev install
+script:
+  - phpcs src tests --standard=psr2
+  - phpunit
 after_script:
   - bin/coveralls -v

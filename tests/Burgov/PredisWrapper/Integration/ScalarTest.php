@@ -60,5 +60,4 @@ class ScalarTest extends AbstractIntegrationTest
         $this->assertTrue($string3->set('other value', null, Scalar::ONLY_OVERWRITE));
         $this->assertEquals('other value', (string) $string3);
     }
-
 }

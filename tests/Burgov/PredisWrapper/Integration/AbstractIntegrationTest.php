@@ -15,7 +15,11 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
         try {
             self::assertEmpty(array_diff($expected, $actual), $message);
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            throw new \PHPUnit_Framework_ExpectationFailedException('Failed asserting that array '.json_encode($actual).' equals array ' . json_encode($expected), $e->getComparisonFailure(), $e);
+            throw new \PHPUnit_Framework_ExpectationFailedException(
+                'Failed asserting that array '.json_encode($actual).' equals array '. json_encode($expected),
+                $e->getComparisonFailure(),
+                $e
+            );
         }
     }
 
@@ -46,4 +50,4 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase
     }
 
     abstract protected function setUpDatabase();
-} 
+}

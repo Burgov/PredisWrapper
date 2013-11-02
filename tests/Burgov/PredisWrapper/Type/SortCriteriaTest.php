@@ -66,4 +66,4 @@ class SortCriteriaTest extends \PHPUnit_Framework_TestCase
     {
         new SortCriteria(null, null, null, SortCriteria::ASC, 'true');
     }
-} 
+}

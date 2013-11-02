@@ -45,7 +45,10 @@ class SortCriteria
         if (null === $limit) {
             return;
         }
-        $exception = new \InvalidArgumentException('The passed argument should be a string containing two numbers separated by a space or an array containing two integers');
+        $exception = new \InvalidArgumentException(
+            'The passed argument should be a string containing two numbers '
+            . 'separated by a space or an array containing two integers'
+        );
 
         if (is_string($limit)) {
             if (!preg_match('/^\d+ \d+$/', $limit)) {
@@ -123,4 +126,4 @@ class SortCriteria
 
         return $parts;
     }
-} 
+}

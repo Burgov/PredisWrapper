@@ -171,8 +171,14 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testDiffStoreMultiArgs()
     {
-        $this->client->expects($this->once())->method('__call')->with('sdiffstore', array('key3', 'key1', 'key2', 'key4'));
-        $res = Set::createFromDiff('key3', new Set($this->client, 'key1'), new Set($this->client, 'key2'), new Set($this->client, 'key4'));
+        $this->client->expects($this->once())->method('__call')
+            ->with('sdiffstore', array('key3', 'key1', 'key2', 'key4'));
+        $res = Set::createFromDiff(
+            'key3',
+            new Set($this->client, 'key1'),
+            new Set($this->client, 'key2'),
+            new Set($this->client, 'key4')
+        );
 
         $this->assertInstanceOf('Burgov\PredisWrapper\Type\Set', $res);
         $this->assertEquals('key3', $res->getKey());
@@ -184,7 +190,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
     public function testDiffStoreNoArgs()
     {
         $this->client->expects($this->never())->method('__call');
-        $res = Set::createFromDiff('key3', new Set($this->client, 'key1'));
+        Set::createFromDiff('key3', new Set($this->client, 'key1'));
     }
 
     public function testIntersectStore()
@@ -198,8 +204,14 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testIntersectStoreMultiArgs()
     {
-        $this->client->expects($this->once())->method('__call')->with('sinterstore', array('key3', 'key1', 'key2', 'key4'));
-        $res = Set::createFromIntersect('key3', new Set($this->client, 'key1'), new Set($this->client, 'key2'), new Set($this->client, 'key4'));
+        $this->client->expects($this->once())->method('__call')
+            ->with('sinterstore', array('key3', 'key1', 'key2', 'key4'));
+        $res = Set::createFromIntersect(
+            'key3',
+            new Set($this->client, 'key1'),
+            new Set($this->client, 'key2'),
+            new Set($this->client, 'key4')
+        );
 
         $this->assertInstanceOf('Burgov\PredisWrapper\Type\Set', $res);
         $this->assertEquals('key3', $res->getKey());
@@ -211,7 +223,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
     public function testIntersectStoreNoArgs()
     {
         $this->client->expects($this->never())->method('__call');
-        $res = Set::createFromIntersect('key3', new Set($this->client, 'key1'));
+        Set::createFromIntersect('key3', new Set($this->client, 'key1'));
     }
 
     public function testUnionStore()
@@ -225,8 +237,14 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testUnionStoreMultiArgs()
     {
-        $this->client->expects($this->once())->method('__call')->with('sunionstore', array('key3', 'key1', 'key2', 'key4'));
-        $res = Set::createFromUnion('key3', new Set($this->client, 'key1'), new Set($this->client, 'key2'), new Set($this->client, 'key4'));
+        $this->client->expects($this->once())->method('__call')
+            ->with('sunionstore', array('key3', 'key1', 'key2', 'key4'));
+        $res = Set::createFromUnion(
+            'key3',
+            new Set($this->client, 'key1'),
+            new Set($this->client, 'key2'),
+            new Set($this->client, 'key4')
+        );
 
         $this->assertInstanceOf('Burgov\PredisWrapper\Type\Set', $res);
         $this->assertEquals('key3', $res->getKey());
@@ -238,7 +256,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
     public function testUnionStoreNoArgs()
     {
         $this->client->expects($this->never())->method('__call');
-        $res = Set::createFromUnion('key3', new Set($this->client, 'key1'));
+        Set::createFromUnion('key3', new Set($this->client, 'key1'));
     }
 
     /**
@@ -254,6 +272,6 @@ class SetTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultiStoreInvalid()
     {
-        $res = Set::createFromUnion('key3', new \DateTime());
+        Set::createFromUnion('key3', new \DateTime());
     }
 }

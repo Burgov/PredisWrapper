@@ -32,6 +32,4 @@ class SortedValue
     {
         return $this->value;
     }
-
-
-} 
+}

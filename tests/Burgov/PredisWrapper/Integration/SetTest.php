@@ -41,7 +41,10 @@ class SetTest extends AbstractIntegrationTest
 
         $this->assertArrayEquals(array('a', 'c'), Set::createFromDiff($this->set3, $this->set1, $this->set2)->all());
         $this->assertArrayEquals(array('d'), Set::createFromIntersect($this->set3, $this->set1, $this->set2)->all());
-        $this->assertArrayEquals(array('a', 'c', 'd', 'e', 'f'), Set::createFromUnion($this->set3, $this->set1, $this->set2)->all());
+        $this->assertArrayEquals(
+            array('a', 'c', 'd', 'e', 'f'),
+            Set::createFromUnion($this->set3, $this->set1, $this->set2)->all()
+        );
 
         $this->assertTrue($this->set1->contains('a'));
         $this->assertFalse($this->set1->contains('b'));

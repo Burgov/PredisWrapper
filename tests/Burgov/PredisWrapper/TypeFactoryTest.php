@@ -87,7 +87,6 @@ class TypeFactoryTest extends \PHPUnit_Framework_TestCase
         $set = $factory->instantiate('test_key');
         $this->assertInstanceOf('Burgov\PredisWrapper\Type\Set', $set);
 
-        $set = $factory->instantiateList('test_key');
+        $factory->instantiateList('test_key');
     }
-
 }

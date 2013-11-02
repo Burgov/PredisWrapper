@@ -24,7 +24,8 @@ class AbstractType
      * @param $key
      * @return string
      */
-    public static function key($key) {
+    public static function key($key)
+    {
         if ($key instanceof self) {
             return $key->getKey();
         }
@@ -49,7 +50,7 @@ class AbstractType
     public function execute($command)
     {
         $arguments = array_slice(func_get_args(), 1);
-        $arguments = array_map(function($argument) {
+        $arguments = array_map(function ($argument) {
             return $argument;
         }, $arguments);
         array_unshift($arguments, $this->key);

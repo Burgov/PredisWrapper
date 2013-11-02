@@ -3,7 +3,6 @@
 namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Exception\HashKeyAlreadySetException;
-use Burgov\PredisWrapper\Type\Hash;
 use Burgov\PredisWrapper\TypeFactory;
 use Predis\ServerException;
 
@@ -37,7 +36,9 @@ class HashTest extends AbstractIntegrationTest
         try {
             $hash->trySet('key3', 'value3');
             $this->fail();
-        } catch (HashKeyAlreadySetException $e) {}
+        } catch (HashKeyAlreadySetException $e) {
+
+        }
 
         $this->assertEquals(array('key1' => 'value1', 'key3' => 'value3'), $hash->getKeyValues(array('key1', 'key3')));
 
@@ -53,7 +54,9 @@ class HashTest extends AbstractIntegrationTest
 
         try {
             $hash->increment('string', 3);
-        } catch (ServerException $e) {}
+        } catch (ServerException $e) {
+
+        }
 
     }
 }

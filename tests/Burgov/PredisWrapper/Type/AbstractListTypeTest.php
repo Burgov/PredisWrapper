@@ -18,7 +18,8 @@ class AbstractListTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSort(array $expectedArguments, SortCriteria $sort = null)
     {
-        $this->client->expects($this->once())->method('__call')->with('sort', array('test_key', $expectedArguments))->will($this->returnValue(array()));
+        $this->client->expects($this->once())->method('__call')->with('sort', array('test_key', $expectedArguments))
+            ->will($this->returnValue(array()));
         $this->type->sort($sort);
     }
 
@@ -28,7 +29,8 @@ class AbstractListTypeTest extends \PHPUnit_Framework_TestCase
     public function testCreateFromSort(array $expectedArguments, SortCriteria $sort = null)
     {
         $expectedArguments['STORE'] = 'new_key';
-        $this->client->expects($this->once())->method('__call')->with('sort', array('test_key', $expectedArguments))->will($this->returnValue(array()));
+        $this->client->expects($this->once())->method('__call')->with('sort', array('test_key', $expectedArguments))
+            ->will($this->returnValue(array()));
         AbstractListType::createFromSort(new Set($this->client, 'new_key'), new Set($this->client, 'test_key'), $sort);
     }
 
@@ -59,9 +61,21 @@ class AbstractListTypeTest extends \PHPUnit_Framework_TestCase
         $sort = new SortCriteria(null, null, array('object_*', SortCriteria::GET_SELF));
         $ret['sort and get self and object'] = array(array('GET' => array('object_*', '#')), $sort);
 
-        $sort = new SortCriteria('weight_*', array(6, 3), array(SortCriteria::GET_SELF, 'object_*->name'), SortCriteria::DESC, true);
-        $ret['end boss'] = array(array('BY' => 'weight_*', 'LIMIT' => array(6, 3), 'GET' => array('#', 'object_*->name'), 'SORT' => 'DESC', 'ALPHA' => 'ALPHA'), $sort);
+        $sort = new SortCriteria(
+            'weight_*',
+            array(6, 3),
+            array(SortCriteria::GET_SELF, 'object_*->name'),
+            SortCriteria::DESC,
+            true
+        );
+        $ret['end boss'] = array(array(
+            'BY' => 'weight_*',
+            'LIMIT' => array(6, 3),
+            'GET' => array('#', 'object_*->name'),
+            'SORT' => 'DESC',
+            'ALPHA' => 'ALPHA'
+        ), $sort);
 
         return $ret;
     }
-} 
+}

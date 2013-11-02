@@ -2,11 +2,13 @@
 
 namespace Burgov\PredisWrapper\Type;
 
-
-use Predis\Client;
-
 class AbstractListType extends AbstractType
 {
+    /**
+     * @param array $result
+     * @param SortCriteria $sort
+     * @return array
+     */
     private static function formatSortResult(array $result, SortCriteria $sort)
     {
         $parts = $sort->getParts();
@@ -65,7 +67,7 @@ class AbstractListType extends AbstractType
      *
      * @see SortCriteria
      * @param Set $dest
-     * @Param Set $src
+     * @param Set $src
      * @param SortCriteria $sort
      * @return array
      */

@@ -133,7 +133,7 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
             }
         }
 
-        if ($aggregate !== self::AGGREGATE_SUM && $aggregate !== self::AGGREGATE_MIN && $aggregate !== self::AGGREGATE_MAX) {
+        if (!in_array($aggregate, array(self::AGGREGATE_MIN, self::AGGREGATE_MAX, self::AGGREGATE_SUM))) {
             throw new \InvalidArgumentException;
         }
 
@@ -189,8 +189,12 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
      * @param string $aggregate
      * @return SortedSet
      */
-    public static function createFromIntersect($dest, array $from, array $weights = null, $aggregate = self::AGGREGATE_SUM)
-    {
+    public static function createFromIntersect(
+        $dest,
+        array $from,
+        array $weights = null,
+        $aggregate = self::AGGREGATE_SUM
+    ) {
         return self::createFromFunction('inter', func_get_args());
     }
 
@@ -206,7 +210,9 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
      * To call ZREVRANGE: $sortedSet->getRange(0, -1, SortedSet::REVERSE)
      * To call ZRANGEBYSCORE: $sortedSet->getRange(0, -1, SortedSet::BY_SCORE)
      * To call ZREVRANGEBYSCORE: $sortedSet->getRange(0, -1, SortedSet::REVERSE | SortedSet::BY_SCORE)
-     * To call ZREVRANGEBYSCORE + WITHSCORES + LIMIT: $sortedSet->getRange(0, -1, SortedSet::REVERSE | SortedSet::BY_SCORE | SortedSet::WITH_SCORES, array(1, 3)
+     * To call ZREVRANGEBYSCORE + WITHSCORES + LIMIT: $sortedSet->getRange(0, -1,
+     *      SortedSet::REVERSE | SortedSet::BY_SCORE | SortedSet::WITH_SCORES, array(1, 3)
+     * )
      *
      * @param int $start
      * @param $end

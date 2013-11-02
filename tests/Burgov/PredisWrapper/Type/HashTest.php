@@ -45,13 +45,15 @@ class HashTest extends \PHPUnit_Framework_TestCase
 
     public function testIterate()
     {
-        $this->client->expects($this->once())->method('__call')->with('hgetall', array('test_key'))->will($this->returnValue(array('key1' => 'value1', 'key2' => 'value2')));
+        $this->client->expects($this->once())->method('__call')->with('hgetall', array('test_key'))
+            ->will($this->returnValue(array('key1' => 'value1', 'key2' => 'value2')));
         $this->assertEquals(array('key1' => 'value1', 'key2' => 'value2'), iterator_to_array($this->type));
     }
 
     public function testIncrement()
     {
-        $this->client->expects($this->once())->method('__call')->with('hincrby', array('test_key', 'key', 3))->will($this->returnValue(4));
+        $this->client->expects($this->once())->method('__call')->with('hincrby', array('test_key', 'key', 3))
+            ->will($this->returnValue(4));
         $ret = $this->type->increment('key', 3);
 
         $this->assertInternalType('integer', $ret);
@@ -59,7 +61,8 @@ class HashTest extends \PHPUnit_Framework_TestCase
 
     public function testIncrementByFloat()
     {
-        $this->client->expects($this->once())->method('__call')->with('hincrbyfloat', array('test_key', 'key', 3.5))->will($this->returnValue('8.75'));
+        $this->client->expects($this->once())->method('__call')->with('hincrbyfloat', array('test_key', 'key', 3.5))
+            ->will($this->returnValue('8.75'));
         $ret = $this->type->increment('key', 3.5);
 
         $this->assertInternalType('float', $ret);
@@ -94,19 +97,25 @@ class HashTest extends \PHPUnit_Framework_TestCase
 
     public function testGetKeyValues()
     {
-        $this->client->expects($this->once())->method('__call')->with('hmget', array('test_key', array('key1', 'key2')))->will($this->returnValue(array('value1', 'value2')));
-        $this->assertEquals(array('key1' => 'value1', 'key2' => 'value2'), $this->type->getKeyValues(array('key1', 'key2')));
+        $this->client->expects($this->once())->method('__call')->with('hmget', array('test_key', array('key1', 'key2')))
+            ->will($this->returnValue(array('value1', 'value2')));
+        $this->assertEquals(
+            array('key1' => 'value1', 'key2' => 'value2'),
+            $this->type->getKeyValues(array('key1', 'key2'))
+        );
     }
 
     public function testSetKeyValues()
     {
-        $this->client->expects($this->once())->method('__call')->with('hmset', array('test_key', array('key1' => 'value1', 'key2' => 'value2')));
+        $this->client->expects($this->once())->method('__call')
+            ->with('hmset', array('test_key', array('key1' => 'value1', 'key2' => 'value2')));
         $this->type->setKeyValues(array('key1' => 'value1', 'key2' => 'value2'));
     }
 
     public function testTrySet()
     {
-        $this->client->expects($this->once())->method('__call')->with('hsetnx', array('test_key', 'key', 'value'))->will($this->returnValue(1));
+        $this->client->expects($this->once())->method('__call')->with('hsetnx', array('test_key', 'key', 'value'))
+            ->will($this->returnValue(1));
         $this->type->trySet('key', 'value');
     }
 
@@ -115,7 +124,8 @@ class HashTest extends \PHPUnit_Framework_TestCase
      */
     public function testTrySetFail()
     {
-        $this->client->expects($this->once())->method('__call')->with('hsetnx', array('test_key', 'key', 'value'))->will($this->returnValue(0));
+        $this->client->expects($this->once())->method('__call')->with('hsetnx', array('test_key', 'key', 'value'))
+            ->will($this->returnValue(0));
         $this->type->trySet('key', 'value');
     }
 }

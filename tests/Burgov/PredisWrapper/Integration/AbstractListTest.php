@@ -53,16 +53,44 @@ class AbstractListTest extends AbstractIntegrationTest
         $this->assertEquals(array('Result 5', 'Result 3', 'Result 9'), $this->keysSet->sort($sort));
 
         $sort = new SortCriteria('weight_*', null, 'object_*->name');
-        $this->assertEquals(array('Object result 5', 'Object result 3', 'Object result 9'), $this->keysSet->sort($sort));
+        $this->assertEquals(
+            array('Object result 5', 'Object result 3', 'Object result 9'),
+            $this->keysSet->sort($sort)
+        );
 
         $sort = new SortCriteria('keyed_weight_*->key', null, 'object_*->name');
-        $this->assertEquals(array('Object result 5', 'Object result 3', 'Object result 9'), $this->keysSet->sort($sort));
+        $this->assertEquals(
+            array('Object result 5', 'Object result 3', 'Object result 9'),
+            $this->keysSet->sort($sort)
+        );
 
-        $sort = new SortCriteria('keyed_weight_*->key', null, array(SortCriteria::GET_SELF, 'keyed_weight_*->key', 'weight_*', 'result_*', 'object_*->name'));
+        $sort = new SortCriteria(
+            'keyed_weight_*->key',
+            null,
+            array(SortCriteria::GET_SELF, 'keyed_weight_*->key', 'weight_*', 'result_*', 'object_*->name')
+        );
         $this->assertEquals(array(
-            array(SortCriteria::GET_SELF => 5, 'keyed_weight_*->key' => 2, 'weight_*' => 2, 'result_*' => 'Result 5', 'object_*->name' => 'Object result 5'),
-            array(SortCriteria::GET_SELF => 3, 'keyed_weight_*->key' => 5, 'weight_*' => 5, 'result_*' => 'Result 3', 'object_*->name' => 'Object result 3'),
-            array(SortCriteria::GET_SELF => 9, 'keyed_weight_*->key' => 9, 'weight_*' => 8, 'result_*' => 'Result 9', 'object_*->name' => 'Object result 9')
+            array(
+                SortCriteria::GET_SELF => 5,
+                'keyed_weight_*->key' => 2,
+                'weight_*' => 2,
+                'result_*' => 'Result 5',
+                'object_*->name' => 'Object result 5'
+            ),
+            array(
+                SortCriteria::GET_SELF => 3,
+                'keyed_weight_*->key' => 5,
+                'weight_*' => 5,
+                'result_*' => 'Result 3',
+                'object_*->name' => 'Object result 3'
+            ),
+            array(
+                SortCriteria::GET_SELF => 9,
+                'keyed_weight_*->key' => 9,
+                'weight_*' => 8,
+                'result_*' => 'Result 9',
+                'object_*->name' => 'Object result 9'
+            )
         ), $this->keysSet->sort($sort));
     }
 }

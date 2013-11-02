@@ -3,9 +3,7 @@
 namespace Burgov\PredisWrapper\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -27,7 +25,7 @@ class CompareCommandsCommand extends Command
 
         $md = "";
 
-        foreach($redisCommands as $redisCommand) {
+        foreach ($redisCommands as $redisCommand) {
             $redisCommandString = sprintf("[%s](http://redis.io/commands/%s)", $redisCommand, $redisCommand);
             $methodWrapString = array_key_exists($redisCommand, $wrapperCommands) ? sprintf(
                 'wrapped by [%s::%s](../src/%s.php#L%s)',
@@ -47,7 +45,7 @@ class CompareCommandsCommand extends Command
         $html = file_get_contents('http://redis.io/commands');
         $crawler = new Crawler($html);
 
-        return $crawler->filter('span.command > a')->each(function(Crawler $node) {
+        return $crawler->filter('span.command > a')->each(function (Crawler $node) {
             return $node->text();
         });
     }
@@ -56,10 +54,13 @@ class CompareCommandsCommand extends Command
     {
         $commands = array();
 
-        foreach(array('Client', 'Type\\AbstractListType', 'Type\\AbstractType', 'Type\\Scalar', 'Type\\Set', 'Type\\SortedSet', 'Type\\PList', 'Type\\Hash') as $type) {
+        foreach (array(
+             'Client', 'Type\\AbstractListType', 'Type\\AbstractType',
+             'Type\\Scalar', 'Type\\Set', 'Type\\SortedSet', 'Type\\PList', 'Type\\Hash'
+         ) as $type) {
             $refl = new \ReflectionClass('Burgov\\PredisWrapper\\'.$type);
 
-            foreach($refl->getMethods() as $method) {
+            foreach ($refl->getMethods() as $method) {
                 $docblock = $method->getDocComment();
                 if (false === $docblock) {
                     continue;
@@ -71,7 +72,7 @@ class CompareCommandsCommand extends Command
 
                 preg_match_all('/[A-Z]+/', $m[1], $m);
 
-                foreach($m[0] as $command) {
+                foreach ($m[0] as $command) {
                     $commands[$command] = array(
                         $refl->getName(),
                         $method->getName(),
@@ -83,4 +84,4 @@ class CompareCommandsCommand extends Command
 
         return $commands;
     }
-} 
+}

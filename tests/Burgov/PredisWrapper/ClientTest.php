@@ -10,7 +10,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->baseClient = $this->getMockBuilder('Predis\Client')->disableOriginalConstructor()->setMethods(array('__call'))->getMock();
+        $this->baseClient = $this->getMockBuilder('Predis\Client')
+            ->disableOriginalConstructor()->setMethods(array('__call'))->getMock();
 
         $this->client = $this->getMockBuilder('Burgov\PredisWrapper\Client')
             ->setConstructorArgs(array($this->baseClient))

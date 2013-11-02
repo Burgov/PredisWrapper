@@ -153,4 +153,4 @@ class Scalar extends AbstractType
     {
         return $this->execute('strlen');
     }
-} 
+}

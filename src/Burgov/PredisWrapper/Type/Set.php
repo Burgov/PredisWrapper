@@ -24,7 +24,7 @@ class Set extends AbstractListType
      */
     public function remove($element)
     {
-        return (Boolean)$this->execute('sremove', $element);
+        return (Boolean)$this->execute('srem', $element);
     }
 
     /**
@@ -158,17 +158,6 @@ class Set extends AbstractListType
     public function randList($amount)
     {
         return $this->execute('srandmember', -$amount);
-    }
-
-    /**
-     * Wraps command SREM
-     *
-     * @param $value
-     * @return bool
-     */
-    public function removeElement($value)
-    {
-        return (Boolean)$this->execute('srem', $value);
     }
 
     private static function createFromFunction($function, array $arguments)

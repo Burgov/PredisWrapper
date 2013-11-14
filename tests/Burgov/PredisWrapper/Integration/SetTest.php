@@ -27,8 +27,8 @@ class SetTest extends AbstractIntegrationTest
     {
         $this->assertArrayEquals(array('a', 'b', 'c'), $this->set1->all());
 
-        $this->assertTrue($this->set1->removeElement('b'));
-        $this->assertFalse($this->set1->removeElement('d'));
+        $this->assertTrue($this->set1->remove('b'));
+        $this->assertFalse($this->set1->remove('d'));
 
         $this->assertTrue($this->set1->add('d'));
         $this->assertFalse($this->set1->add('c'));

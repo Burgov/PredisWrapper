@@ -27,7 +27,7 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testRemove()
     {
-        $this->client->expects($this->once())->method('__call')->with('sremove', array('test_key', 'test'));
+        $this->client->expects($this->once())->method('__call')->with('srem', array('test_key', 'test'));
         $res = $this->type->remove('test');
 
         $this->assertInternalType('boolean', $res);
@@ -129,14 +129,6 @@ class SetTest extends \PHPUnit_Framework_TestCase
     {
         $this->client->expects($this->once())->method('__call')->with('srandmember', array('test_key', -3));
         $this->type->randList(3);
-    }
-
-    public function testRemoveElement()
-    {
-        $this->client->expects($this->once())->method('__call')->with('srem', array('test_key', 'test'));
-        $res = $this->type->removeElement('test');
-
-        $this->assertInternalType('boolean', $res);
     }
 
     public function testUnion()

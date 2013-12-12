@@ -28,7 +28,9 @@ class Client
     {
         if (null === $this->version) {
             $info = $this->client->info('server');
-            $this->version = $info['Server']['redis_version'];
+
+            // it appears that on some machines, the previous line will return a deep array, and on some a flat array
+            $this->version = array_key_exists('Server', $info) ? $info['Server']['redis_version'] : $info['redis_version'];
         }
 
         return $this->version;

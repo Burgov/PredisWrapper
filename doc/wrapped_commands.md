@@ -20,18 +20,18 @@
 [DEBUG SEGFAULT](http://redis.io/commands/DEBUG SEGFAULT): not wrapped  
 [DECR](http://redis.io/commands/DECR): not wrapped  
 [DECRBY](http://redis.io/commands/DECRBY): not wrapped  
-[DEL](http://redis.io/commands/DEL): wrapped by [Burgov\PredisWrapper\Client::delete](../src/Burgov/PredisWrapper/Client.php#L58)  
+[DEL](http://redis.io/commands/DEL): wrapped by [Burgov\PredisWrapper\Client::delete](../src/Burgov/PredisWrapper/Client.php#L60)  
 [DISCARD](http://redis.io/commands/DISCARD): not wrapped  
 [DUMP](http://redis.io/commands/DUMP): not wrapped  
 [ECHO](http://redis.io/commands/ECHO): not wrapped  
 [EVAL](http://redis.io/commands/EVAL): not wrapped  
 [EVALSHA](http://redis.io/commands/EVALSHA): not wrapped  
 [EXEC](http://redis.io/commands/EXEC): not wrapped  
-[EXISTS](http://redis.io/commands/EXISTS): wrapped by [Burgov\PredisWrapper\Client::exists](../src/Burgov/PredisWrapper/Client.php#L46)  
-[EXPIRE](http://redis.io/commands/EXPIRE): not wrapped  
+[EXISTS](http://redis.io/commands/EXISTS): wrapped by [Burgov\PredisWrapper\Client::exists](../src/Burgov/PredisWrapper/Client.php#L48)  
+[EXPIRE](http://redis.io/commands/EXPIRE): wrapped by [Burgov\PredisWrapper\Client::expire](../src/Burgov/PredisWrapper/Client.php#L108)  
 [EXPIREAT](http://redis.io/commands/EXPIREAT): not wrapped  
 [FLUSHALL](http://redis.io/commands/FLUSHALL): not wrapped  
-[FLUSHDB](http://redis.io/commands/FLUSHDB): wrapped by [Burgov\PredisWrapper\Client::flushDatabase](../src/Burgov/PredisWrapper/Client.php#L81)  
+[FLUSHDB](http://redis.io/commands/FLUSHDB): wrapped by [Burgov\PredisWrapper\Client::flushDatabase](../src/Burgov/PredisWrapper/Client.php#L83)  
 [GET](http://redis.io/commands/GET): wrapped by [Burgov\PredisWrapper\Type\Scalar::get](../src/Burgov/PredisWrapper/Type/Scalar.php#L91)  
 [GETBIT](http://redis.io/commands/GETBIT): not wrapped  
 [GETRANGE](http://redis.io/commands/GETRANGE): wrapped by [Burgov\PredisWrapper\Type\Scalar::getRange](../src/Burgov/PredisWrapper/Type/Scalar.php#L119)  
@@ -53,7 +53,7 @@
 [INCRBY](http://redis.io/commands/INCRBY): not wrapped  
 [INCRBYFLOAT](http://redis.io/commands/INCRBYFLOAT): not wrapped  
 [INFO](http://redis.io/commands/INFO): not wrapped  
-[KEYS](http://redis.io/commands/KEYS): wrapped by [Burgov\PredisWrapper\Client::find](../src/Burgov/PredisWrapper/Client.php#L93)  
+[KEYS](http://redis.io/commands/KEYS): wrapped by [Burgov\PredisWrapper\Client::find](../src/Burgov/PredisWrapper/Client.php#L95)  
 [LASTSAVE](http://redis.io/commands/LASTSAVE): not wrapped  
 [LINDEX](http://redis.io/commands/LINDEX): wrapped by [Burgov\PredisWrapper\Type\PList::offsetGet](../src/Burgov/PredisWrapper/Type/PList.php#L63)  
 [LINSERT](http://redis.io/commands/LINSERT): wrapped by [Burgov\PredisWrapper\Type\PList::insert](../src/Burgov/PredisWrapper/Type/PList.php#L258)  
@@ -74,7 +74,7 @@
 [MULTI](http://redis.io/commands/MULTI): not wrapped  
 [OBJECT](http://redis.io/commands/OBJECT): not wrapped  
 [PERSIST](http://redis.io/commands/PERSIST): not wrapped  
-[PEXPIRE](http://redis.io/commands/PEXPIRE): not wrapped  
+[PEXPIRE](http://redis.io/commands/PEXPIRE): wrapped by [Burgov\PredisWrapper\Client::expire](../src/Burgov/PredisWrapper/Client.php#L108)  
 [PEXPIREAT](http://redis.io/commands/PEXPIREAT): not wrapped  
 [PING](http://redis.io/commands/PING): not wrapped  
 [PSETEX](http://redis.io/commands/PSETEX): wrapped by [Burgov\PredisWrapper\Type\Scalar::set](../src/Burgov/PredisWrapper/Type/Scalar.php#L23)  
@@ -126,7 +126,7 @@
 [SYNC](http://redis.io/commands/SYNC): not wrapped  
 [TIME](http://redis.io/commands/TIME): not wrapped  
 [TTL](http://redis.io/commands/TTL): not wrapped  
-[TYPE](http://redis.io/commands/TYPE): wrapped by [Burgov\PredisWrapper\Client::getType](../src/Burgov/PredisWrapper/Client.php#L70)  
+[TYPE](http://redis.io/commands/TYPE): wrapped by [Burgov\PredisWrapper\Client::getType](../src/Burgov/PredisWrapper/Client.php#L72)  
 [UNSUBSCRIBE](http://redis.io/commands/UNSUBSCRIBE): not wrapped  
 [UNWATCH](http://redis.io/commands/UNWATCH): not wrapped  
 [WATCH](http://redis.io/commands/WATCH): not wrapped  

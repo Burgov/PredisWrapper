@@ -36,4 +36,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->baseClient->expects($this->once())->method('__call')->with('keys', array('some?search'));
         $this->client->find('some?search');
     }
+
+    public function testExpire()
+    {
+        $this->baseClient->expects($this->once())->method('__call')->with('expire', array('key', 5));
+        $this->client->expire('key', 5);
+    }
+
+    public function testExpireWithFloat()
+    {
+        $this->baseClient->expects($this->once())->method('__call')->with('pexpire', array('key', 5500));
+        $this->client->expire('key', 5.5);
+    }
 }

@@ -71,7 +71,7 @@ class Client
      */
     public function getType($key)
     {
-        return $this->client->type($key);
+        return $this->client->type(AbstractType::key($key));
     }
 
     /**
@@ -95,5 +95,24 @@ class Client
     public function find($glob)
     {
         return $this->client->keys($glob);
+    }
+
+    /**
+     * Finds keys matched by a glod
+     * Wraps commands EXPIRE, PEXPIRE
+     *
+     * @param $key
+     * @param $ttl int or float
+     * @return array
+     */
+    public function expire($key, $ttl)
+    {
+        $command = 'expire';
+        if (is_float($ttl)) {
+            $command = 'p' . $command;
+            $ttl *= 1000;
+        }
+
+        call_user_func(array($this->client, $command), AbstractType::key($key), $ttl);
     }
 }

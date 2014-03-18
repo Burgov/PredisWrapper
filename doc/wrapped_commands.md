@@ -4,12 +4,14 @@
 [BGSAVE](http://redis.io/commands/BGSAVE): not wrapped  
 [BITCOUNT](http://redis.io/commands/BITCOUNT): not wrapped  
 [BITOP](http://redis.io/commands/BITOP): not wrapped  
+[BITPOS](http://redis.io/commands/BITPOS): not wrapped  
 [BLPOP](http://redis.io/commands/BLPOP): wrapped by [Burgov\PredisWrapper\Type\PList::blockShiftMulti](../src/Burgov/PredisWrapper/Type/PList.php#L224)  
 [BRPOP](http://redis.io/commands/BRPOP): wrapped by [Burgov\PredisWrapper\Type\PList::blockPopMulti](../src/Burgov/PredisWrapper/Type/PList.php#L172)  
 [BRPOPLPUSH](http://redis.io/commands/BRPOPLPUSH): wrapped by [Burgov\PredisWrapper\Type\PList::blockPopAndPushInto](../src/Burgov/PredisWrapper/Type/PList.php#L324)  
 [CLIENT KILL](http://redis.io/commands/CLIENT KILL): not wrapped  
 [CLIENT LIST](http://redis.io/commands/CLIENT LIST): not wrapped  
 [CLIENT GETNAME](http://redis.io/commands/CLIENT GETNAME): not wrapped  
+[CLIENT PAUSE](http://redis.io/commands/CLIENT PAUSE): not wrapped  
 [CLIENT SETNAME](http://redis.io/commands/CLIENT SETNAME): not wrapped  
 [CONFIG GET](http://redis.io/commands/CONFIG GET): not wrapped  
 [CONFIG REWRITE](http://redis.io/commands/CONFIG REWRITE): not wrapped  

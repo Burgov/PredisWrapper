@@ -17,6 +17,11 @@
         "symfony/dom-crawler": "*",
         "symfony/css-selector": "*"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
+    },
     "config": {
         "bin-dir": "bin"
     },

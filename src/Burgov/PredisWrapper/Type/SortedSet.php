@@ -148,7 +148,8 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         array_unshift($arguments, count($arguments));
         array_unshift($arguments, 'z' . $function . 'store');
         if (null !== $weights) {
-            for ($a = count($weights); $a < count($from); $a++) {
+            $b = count($from);
+            for ($a = count($weights); $a < $b; $a++) {
                 $weights[] = 1;
             }
             $arguments[] = 'WEIGHTS';

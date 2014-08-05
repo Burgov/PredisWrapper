@@ -4,7 +4,7 @@ namespace Burgov\PredisWrapper\Integration;
 
 use Burgov\PredisWrapper\Exception\HashKeyAlreadySetException;
 use Burgov\PredisWrapper\TypeFactory;
-use Predis\ServerException;
+use Predis\Response\ServerException;
 
 class HashTest extends AbstractIntegrationTest
 {

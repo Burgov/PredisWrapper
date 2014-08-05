@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "predis/predis": "*"
+        "predis/predis": "~1.0.0"
     },
     "require-dev": {
         "symfony/process": "*",
@@ -19,7 +19,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
     },
     "config": {

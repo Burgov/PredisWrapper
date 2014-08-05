@@ -255,9 +255,9 @@ class SortedSet extends AbstractListType implements \Countable, \IteratorAggrega
         $results = call_user_func_array(array($this, 'execute'), $arguments);
 
         if ($flags & self::WITH_SCORES) {
-            $results = array_map(function (array $result) {
-                return new SortedValue($result[0], $result[1]);
-            }, $results);
+            $results = array_map(function ($key, $value) {
+                return new SortedValue($key, $value);
+            }, array_keys($results), array_values($results));
         }
 
         return $results;

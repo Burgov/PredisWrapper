@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "predis/predis": "*"
+        "predis/predis": "<1.0.0"
     },
     "require-dev": {
         "symfony/process": "*",
@@ -16,11 +16,6 @@
         "symfony/console": "*",
         "symfony/dom-crawler": "*",
         "symfony/css-selector": "*"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1.x-dev"
-        }
     },
     "config": {
         "bin-dir": "bin"

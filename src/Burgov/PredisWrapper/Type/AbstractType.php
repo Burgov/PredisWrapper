@@ -27,9 +27,13 @@ class AbstractType
     public static function key($key)
     {
         if ($key instanceof self) {
-            return $key->getKey();
+            $key = $key->getKey();
         }
-        return (string) $key;
+        if (!is_string($key)) {
+            throw new \InvalidArgumentException('Key must be a string or an instance of self');
+        }
+
+        return $key;
     }
 
     protected function getClient()
